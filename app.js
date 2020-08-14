@@ -5,6 +5,9 @@ const https = require("https");
 
 const app = express();
 
+const listID = config.LIST_ID;
+const mailID = config.MAIL_API_KEY;
+
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -32,11 +35,11 @@ app.post("/", function(req, res){
 
   const jsonData = JSON.stringify(data);
 
-  const url = "https://us17.api.mailchimp.com/3.0/lists/31b6947b73";
+  const url = "https://us17.api.mailchimp.com/3.0/lists/" + listID;
 
   const options = {
     method: "POST",
-    auth: "mpatel3:7e43181e6f75f086daf07ed7dfc63faf-us17"
+    auth: mailID;
   }
   const request = https.request(url, options, function(response) {
     if (response.statusCode === 200) {
@@ -62,9 +65,3 @@ app.post("/failure", function(req, res){
 app.listen(process.env.PORT || 3000,function(){
   console.log("Server is running on server 3000")
 })
-
-// API Key
-// 7e43181e6f75f086daf07ed7dfc63faf-us17
-
-// List ID
-// 31b6947b73
